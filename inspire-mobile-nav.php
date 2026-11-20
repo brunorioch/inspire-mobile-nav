@@ -3,7 +3,7 @@
  * Plugin Name:       INSPIRE Mobile Nav
  * Plugin URI:        https://inspiredm.co.uk
  * Description:        A simple, self-contained mobile navigation: a hamburger button and full-screen overlay menu you drop in with a shortcode. Placement, colours, toggle icons, overlay tint and open animation are all set from one settings page. Leaves your theme untouched.
- * Version:           1.9.5
+ * Version:           1.9.6
  * Requires at least: 5.5
  * Tested up to:      7.1
  * Requires PHP:      7.4
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // No direct access.
 }
 
-define( 'IMN_VERSION', '1.9.5' );
+define( 'IMN_VERSION', '1.9.6' );
 define( 'IMN_URL', plugin_dir_url( __FILE__ ) );
 define( 'IMN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'IMN_OPTION', 'imn_settings' );
@@ -122,6 +122,25 @@ function imn_get_settings() {
 	}
 	return wp_parse_args( $saved, imn_defaults() );
 }
+
+/**
+ * One-time upgrade for sites saved before the hover colour setting existed
+ * (1.1.0 era). Those menus kept their text colour on hover, so set the hover
+ * colour to the site's text colour rather than the new grey default.
+ *
+ * Runs on plugins_loaded, before the settings sanitiser is registered on
+ * admin_init, so only this one key is added and nothing else is touched.
+ */
+function imn_maybe_upgrade_settings() {
+	$saved = get_option( IMN_OPTION );
+	if ( ! is_array( $saved ) || array_key_exists( 'text_hover_color', $saved ) ) {
+		return; // Fresh install (defaults apply) or already has a hover colour.
+	}
+	$defaults                  = imn_defaults();
+	$saved['text_hover_color'] = imn_sanitize_hex( $saved['text_color'] ?? '', $defaults['text_color'] );
+	update_option( IMN_OPTION, $saved );
+}
+add_action( 'plugins_loaded', 'imn_maybe_upgrade_settings' );
 
 /**
  * Convert a hex colour + 0-100 opacity into an rgba() string.

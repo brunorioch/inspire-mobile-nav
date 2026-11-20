@@ -4,7 +4,7 @@ Tags: mobile, menu, navigation, hamburger, responsive
 Requires at least: 5.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.9.5
+Stable tag: 1.9.6
 License: GPLv2 or later
 
 A simple, self-contained mobile navigation: a hamburger button and full-screen
@@ -53,6 +53,11 @@ you select.
 * Uses jQuery (bundled with WordPress). No external dependencies.
 
 == Changelog ==
+
+= 1.9.6 =
+* Sites upgrading from 1.1.0 keep their menu link colour on hover instead
+  of switching to the new light grey default. The hover colour is set to the
+  site's text colour once, on upgrade, and can be changed in Settings.
 
 = 1.9.5 =
 * WordPress now checks the minimum version (5.5) before installing or

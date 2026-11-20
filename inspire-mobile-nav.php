@@ -27,7 +27,7 @@ define( 'IMN_OPTION', 'imn_settings' );
  * GitHub repository the plugin updates from. Each site checks it for new
  * releases and shows the normal "Update available" notice in WP Admin.
  */
-define( 'IMN_UPDATE_REPO', 'https://github.com/GITHUB-USERNAME/inspire-mobile-nav/' );
+define( 'IMN_UPDATE_REPO', 'https://github.com/brunorioch/inspire-mobile-nav/' );
 
 /**
  * Self-updates from GitHub releases (Plugin Update Checker library).

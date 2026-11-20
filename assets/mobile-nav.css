@@ -1,0 +1,258 @@
+/* INSPIRE Mobile Nav
+ * Structural styles. Colours come from CSS variables set inline on .imn;
+ * placement / icon / animation come from modifier classes on .imn.
+ * The breakpoint media query is printed inline by the plugin.
+ */
+
+.imn {
+	--imn-bar: #1a1a1a;
+	--imn-bar-open: #ffffff;
+	--imn-overlay-bg: rgba(15, 46, 29, 0.97);
+	--imn-overlay-tint: transparent;
+	--imn-bg-image: none;
+	--imn-bg-size: cover;
+	--imn-bg-position: center center;
+	--imn-text: #ffffff;
+	--imn-text-hover: #cccccc;
+	--imn-font: inherit;
+	--imn-text-size: 1.4em;
+	--imn-text-decoration: none;
+	--imn-link-pad-y: 0.45em;
+	--imn-bar-w: 30px;
+	--imn-bar-thickness: 2px;
+	--imn-bar-gap: 5px;
+	/* Offsets for the fixed top-left / top-right placements. */
+	--imn-fixed-top: 20px;
+	--imn-fixed-side: 20px;
+	/* Distance each end bar travels to meet in the middle for the X. */
+	--imn-bar-move: calc(var(--imn-bar-thickness) + var(--imn-bar-gap));
+	--imn-z: 100000;
+	--imn-z-top: 100001;
+}
+
+/* Hidden checkbox drives the open/closed state (no JS needed to open). */
+.imn-toggle {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+
+/* Screen-reader-only text inside the label. */
+.imn-sr {
+	position: absolute !important;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	border: 0;
+	white-space: nowrap;
+}
+
+/* ---- Hamburger button ---- */
+.imn-hamburger {
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: var(--imn-bar-gap);
+	width: var(--imn-bar-w);
+	cursor: pointer;
+	box-sizing: border-box;
+	position: relative;
+	z-index: var(--imn-z-top);
+}
+
+.imn-hamburger .imn-bar {
+	display: block;
+	width: 100%;
+	height: var(--imn-bar-thickness);
+	background: var(--imn-bar);
+	border-radius: 2px;
+	transition: transform 0.3s ease, opacity 0.3s ease, background-color 0.3s ease;
+}
+
+/* Animate the three bars into an X and recolour when open.
+   The end bars move by (thickness + gap) so the X stays centred at any size. */
+.imn-toggle:checked + .imn-hamburger .imn-bar {
+	background: var(--imn-bar-open);
+}
+.imn-toggle:checked + .imn-hamburger .imn-bar:nth-child(2) {
+	transform: translateY(var(--imn-bar-move)) rotate(45deg);
+}
+.imn-toggle:checked + .imn-hamburger .imn-bar:nth-child(3) {
+	opacity: 0;
+}
+.imn-toggle:checked + .imn-hamburger .imn-bar:nth-child(4) {
+	transform: translateY(calc(-1 * var(--imn-bar-move))) rotate(-45deg);
+}
+
+/* Fixed placements. Offsets are set from the settings page (px or em). */
+.imn-pos-top-left .imn-hamburger {
+	position: fixed;
+	top: var(--imn-fixed-top);
+	left: var(--imn-fixed-side);
+}
+.imn-pos-top-right .imn-hamburger {
+	position: fixed;
+	top: var(--imn-fixed-top);
+	right: var(--imn-fixed-side);
+}
+
+/* ---- Full-screen overlay ---- */
+.imn-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: var(--imn-z);
+	background: var(--imn-overlay-bg);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4rem 1.5rem;
+	overflow-y: auto;
+	opacity: 0;
+	visibility: hidden;
+	transition: transform 0.35s ease, opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+/* With a background image: the image sits on top, the overlay colour behind it.
+   Use a transparent image, or Contain/Auto sizing, to let the colour show
+   around or through it. */
+.imn-has-bg-image .imn-overlay {
+	background-color: var(--imn-overlay-bg);
+	background-image: var(--imn-bg-image), var(--imn-overlay-tint);
+	background-repeat: no-repeat, no-repeat;
+	background-position: var(--imn-bg-position), center center;
+	background-size: var(--imn-bg-size), cover;
+}
+
+.imn-anim-slide-left .imn-overlay {
+	transform: translateX(-100%);
+}
+.imn-anim-slide-right .imn-overlay {
+	transform: translateX(100%);
+}
+.imn-anim-slide-down .imn-overlay {
+	transform: translateY(-100%);
+}
+.imn-anim-fade .imn-overlay {
+	transform: none;
+}
+
+.imn-toggle:checked ~ .imn-overlay {
+	opacity: 1;
+	visibility: visible;
+	transform: none;
+	transition: transform 0.35s ease, opacity 0.3s ease, visibility 0s;
+}
+
+/* Lock background scroll while open. */
+html.imn-open,
+html.imn-open body {
+	overflow: hidden;
+}
+
+/* ---- Menu ---- */
+.imn-menu {
+	width: 100%;
+	max-width: 480px;
+	font-family: var(--imn-font);
+	font-size: var(--imn-text-size);
+}
+.imn-menu ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.imn-menu li {
+	text-align: center;
+}
+.imn-menu a {
+	color: var(--imn-text);
+	text-decoration: var(--imn-text-decoration);
+	display: inline-block;
+	padding: var(--imn-link-pad-y) 0.25em;
+	font-size: 1em;
+	line-height: 1.2;
+	transition: color 0.2s ease;
+}
+.imn-menu a:hover,
+.imn-menu a:focus {
+	color: var(--imn-text-hover);
+	text-decoration: var(--imn-text-decoration);
+}
+
+/* Rows that have a submenu: link + toggle button share a row, submenu drops below. */
+.imn-menu .menu-item-has-children {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+}
+.imn-menu .menu-item-has-children > a {
+	flex: 0 1 auto;
+}
+.imn-menu .sub-menu {
+	flex: 0 0 100%;
+	width: 100%;
+	padding-bottom: 0.5em;
+}
+.imn-menu .sub-menu a {
+	font-size: 0.8em;
+	opacity: 0.9;
+}
+
+/* ---- Submenu toggle button ---- */
+.imn-indicator {
+	background: none;
+	border: 0;
+	padding: 0;
+	margin-left: 0.35em;
+	color: var(--imn-text);
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.8em;
+	height: 1.8em;
+	flex: 0 0 auto;
+	line-height: 0;
+}
+.imn-indicator svg {
+	width: 20px;
+	height: 20px;
+	display: block;
+	transition: transform 0.25s ease;
+}
+.imn-indicator .imn-vertical {
+	transition: opacity 0.2s ease, transform 0.2s ease;
+	transform-box: fill-box;
+	transform-origin: center;
+}
+
+/* Plus -> minus */
+.imn-icon-plusminus .menu-item-has-children.is-open .imn-vertical {
+	opacity: 0;
+	transform: scaleY(0);
+}
+
+/* Down arrow -> up arrow */
+.imn-icon-chevron .menu-item-has-children.is-open .imn-indicator svg {
+	transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.imn-overlay,
+	.imn-hamburger .imn-bar,
+	.imn-menu a,
+	.imn-indicator svg,
+	.imn-indicator .imn-vertical {
+		transition: none !important;
+	}
+}

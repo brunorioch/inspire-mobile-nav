@@ -2,9 +2,9 @@
 Contributors: inspiredm
 Tags: mobile, menu, navigation, hamburger, responsive
 Requires at least: 5.5
-Tested up to: 6.6
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.9.4
+Stable tag: 1.9.5
 License: GPLv2 or later
 
 A simple, self-contained mobile navigation: a hamburger button and full-screen
@@ -53,6 +53,11 @@ you select.
 * Uses jQuery (bundled with WordPress). No external dependencies.
 
 == Changelog ==
+
+= 1.9.5 =
+* WordPress now checks the minimum version (5.5) before installing or
+  updating the plugin.
+* Tested with WordPress 7.1.
 
 = 1.9.4 =
 * New: the plugin now updates itself from GitHub. New versions show up as

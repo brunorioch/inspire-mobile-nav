@@ -3,7 +3,9 @@
  * Plugin Name:       INSPIRE Mobile Nav
  * Plugin URI:        https://inspiredm.co.uk
  * Description:        A simple, self-contained mobile navigation: a hamburger button and full-screen overlay menu you drop in with a shortcode. Placement, colours, toggle icons, overlay tint and open animation are all set from one settings page. Leaves your theme untouched.
- * Version:           1.9.4
+ * Version:           1.9.5
+ * Requires at least: 5.5
+ * Tested up to:      7.1
  * Requires PHP:      7.4
  * Author:            INSPIRE
  * Author URI:        https://inspiredm.co.uk
@@ -18,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // No direct access.
 }
 
-define( 'IMN_VERSION', '1.9.4' );
+define( 'IMN_VERSION', '1.9.5' );
 define( 'IMN_URL', plugin_dir_url( __FILE__ ) );
 define( 'IMN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'IMN_OPTION', 'imn_settings' );
